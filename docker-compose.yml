@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  janu:
+    image: eclipse/janu
+    restart: unless-stopped
+    ports:
+      - 7447:7447
+      - 7447:7447/udp
+      - 8000:8000
+    volumes:
+      - ./janu_docker:/root/.janu
+      - ./janu_filesystem:/filesystem
+    environment:
+      - RUST_LOG=debug
+      - ZBACKEND_FS_ROOT=/filesystem
+    networks:
+      - janu-nw
+
+networks:
+  janu-nw:
+    driver: bridge
